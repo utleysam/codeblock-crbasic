@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeBlock CRBasic — Installation Guide</title>
+<style>
+  :root {
+    --bg: #1e1e2e;
+    --surface: #262637;
+    --border: #3a3a52;
+    --text: #e0e0e8;
+    --text-muted: #9898b0;
+    --accent: #b48ead;
+    --accent2: #88c0d0;
+    --green: #a3be8c;
+    --orange: #d08770;
+    --yellow: #ebcb8b;
+    --red: #bf616a;
+    --code-bg: #1a1a28;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 0;
+  }
+
+  /* ── Header ─────────────────────────────────── */
+  header {
+    background: linear-gradient(135deg, #2e2e48 0%, #1e1e2e 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+  }
+  header h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+  header p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  /* ── Main container ─────────────────────────── */
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ── Steps ──────────────────────────────────── */
+  .step {
+    margin-bottom: 2.5rem;
+  }
+  .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #1e1e2e;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-right: 0.6rem;
+    vertical-align: middle;
+  }
+  .step h2 {
+    display: inline;
+    font-size: 1.35rem;
+    vertical-align: middle;
+    color: var(--text);
+  }
+  .step-body {
+    margin-top: 0.8rem;
+    margin-left: 0;
+    padding-left: 0;
+  }
+
+  /* ── Text ───────────────────────────────────── */
+  p { margin-bottom: 0.9rem; }
+
+  strong { color: var(--accent2); font-weight: 600; }
+
+  a { color: var(--accent2); text-decoration: underline; }
+  a:hover { color: var(--accent); }
+
+  /* ── Lists ──────────────────────────────────── */
+  ul, ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+  }
+  li { margin-bottom: 0.35rem; }
+
+  /* ── Code ───────────────────────────────────── */
+  code {
+    font-family: "Cascadia Code", "Fira Code", "JetBrains Mono", Consolas, monospace;
+    background: var(--code-bg);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+    font-size: 0.92em;
+    color: var(--yellow);
+  }
+
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.3rem;
+    overflow-x: auto;
+    margin: 0.8rem 0 1.2rem;
+    position: relative;
+  }
+  pre code {
+    background: none;
+    padding: 0;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--text);
+  }
+  pre .label {
+    position: absolute;
+    top: 0.45rem;
+    right: 0.7rem;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    user-select: none;
+  }
+
+  /* Syntax colors inside example */
+  .kw { color: #c678dd; }
+  .fn { color: #61afef; }
+  .num { color: #d19a66; }
+  .str { color: #98c379; }
+  .cmt { color: #7f848e; font-style: italic; }
+  .const { color: #e5c07b; }
+
+  /* ── File list box ──────────────────────────── */
+  .file-list {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.3rem;
+    margin: 0.8rem 0 1.2rem;
+  }
+  .file-list .file-row {
+    display: flex;
+    align-items: center;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .file-list .file-row:last-child { border-bottom: none; }
+  .file-icon {
+    width: 28px;
+    text-align: center;
+    margin-right: 0.7rem;
+    font-size: 1.1rem;
+  }
+  .file-name {
+    font-family: "Cascadia Code", Consolas, monospace;
+    font-size: 0.92rem;
+    color: var(--accent2);
+    flex: 1;
+  }
+  .file-desc {
+    color: var(--text-muted);
+    font-size: 0.82rem;
+  }
+
+  /* ── Path box ───────────────────────────────── */
+  .path-box {
+    background: var(--code-bg);
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    padding: 0.9rem 1.2rem;
+    margin: 0.8rem 0 1.2rem;
+    font-family: "Cascadia Code", Consolas, monospace;
+    font-size: 0.88rem;
+    color: var(--yellow);
+    word-break: break-all;
+  }
+  .path-box .path-dim { color: var(--text-muted); }
+  .path-box .path-highlight { color: var(--green); font-weight: 600; }
+
+  /* ── Callout / tip box ──────────────────────── */
+  .callout {
+    border-left: 4px solid var(--accent);
+    background: var(--surface);
+    border-radius: 0 8px 8px 0;
+    padding: 0.9rem 1.2rem;
+    margin: 1rem 0;
+  }
+  .callout.tip { border-left-color: var(--green); }
+  .callout.warn { border-left-color: var(--orange); }
+  .callout-title {
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.3rem;
+  }
+  .callout.tip .callout-title { color: var(--green); }
+  .callout.warn .callout-title { color: var(--orange); }
+
+  /* ── Copy button ────────────────────────────── */
+  .copy-wrap { position: relative; }
+  .copy-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.6rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    padding: 0.25rem 0.55rem;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    z-index: 1;
+    font-family: inherit;
+  }
+  .copy-btn:hover { background: var(--border); color: var(--text); }
+  .copy-btn.copied { color: var(--green); }
+
+  /* ── Divider ────────────────────────────────── */
+  hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2.5rem 0;
+  }
+
+  /* ── Footer ─────────────────────────────────── */
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    padding: 2rem 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── Responsive ─────────────────────────────── */
+  @media (max-width: 600px) {
+    header { padding: 2rem 1rem 1.5rem; }
+    header h1 { font-size: 1.6rem; }
+    main { padding: 1.5rem 1rem 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>CodeBlock CRBasic</h1>
+  <p>Syntax highlighting for CRBasic code blocks in Obsidian.<br>A simple guide to install and use the plugin.</p>
+</header>
+
+<main>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- WHAT YOU NEED                                -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="step">
+    <span class="step-number">1</span>
+    <h2>What You Need</h2>
+    <div class="step-body">
+      <p>The plugin is made up of <strong>3 small files</strong>. That's it &mdash; no installer, no app store, just 3 files:</p>
+
+      <div class="file-list">
+        <div class="file-row">
+          <span class="file-icon">&#128196;</span>
+          <span class="file-name">main.js</span>
+          <span class="file-desc">The plugin code (~16 KB)</span>
+        </div>
+        <div class="file-row">
+          <span class="file-icon">&#128196;</span>
+          <span class="file-name">manifest.json</span>
+          <span class="file-desc">Tells Obsidian the plugin's name and version</span>
+        </div>
+        <div class="file-row">
+          <span class="file-icon">&#128196;</span>
+          <span class="file-name">styles.css</span>
+          <span class="file-desc">Style sheet (mostly empty &mdash; uses your theme's colors)</span>
+        </div>
+      </div>
+
+      <p>These files should have been provided to you alongside this guide. If you're missing any of them, ask the person who shared the plugin with you.</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- FIND YOUR VAULT                              -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="step">
+    <span class="step-number">2</span>
+    <h2>Find Your Obsidian Vault Folder</h2>
+    <div class="step-body">
+      <p>Your <strong>vault</strong> is the folder on your computer where Obsidian stores all your notes. You chose this folder when you first set up Obsidian.</p>
+
+      <p>Not sure where it is? Open Obsidian, then:</p>
+      <ol>
+        <li>Click the <strong>Settings</strong> gear icon (bottom-left corner)</li>
+        <li>Look at the very bottom of the left sidebar &mdash; it shows your vault name</li>
+        <li>Click <strong>Files &amp; Links</strong> in the sidebar</li>
+        <li>The path shown at the top is your vault folder</li>
+      </ol>
+
+      <p>Or simply: open <strong>File Explorer</strong> (Windows) or <strong>Finder</strong> (Mac) and navigate to wherever your notes live.</p>
+
+      <div class="callout tip">
+        <div class="callout-title">Tip</div>
+        <p>Inside your vault folder, there's a hidden folder called <code>.obsidian</code>. On Windows, you may need to turn on <strong>"Show hidden items"</strong> in File Explorer's <strong>View</strong> menu to see it.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- CREATE THE PLUGIN FOLDER                     -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="step">
+    <span class="step-number">3</span>
+    <h2>Create the Plugin Folder</h2>
+    <div class="step-body">
+      <p>Inside your vault, navigate to this path:</p>
+
+      <div class="path-box">
+        <span class="path-dim">Your Vault</span> &#8250;
+        <span class="path-dim">.obsidian</span> &#8250;
+        <span class="path-dim">plugins</span> &#8250;
+        <span class="path-highlight">codeblock-crbasic</span>
+      </div>
+
+      <p>You may need to <strong>create</strong> some of these folders if they don't exist yet:</p>
+      <ul>
+        <li>The <code>plugins</code> folder should already exist if you've ever used a community plugin. If it doesn't, create it.</li>
+        <li>Create a new folder inside <code>plugins</code> called exactly: <code>codeblock-crbasic</code></li>
+      </ul>
+
+      <p>For example, if your vault is at <code>C:\Users\Me\Documents\MyVault</code>, the full path would be:</p>
+
+      <div class="path-box">
+        C:\Users\Me\Documents\MyVault\.obsidian\plugins\<span class="path-highlight">codeblock-crbasic</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- COPY THE FILES                               -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="step">
+    <span class="step-number">4</span>
+    <h2>Copy the 3 Files</h2>
+    <div class="step-body">
+      <p>Copy <code>main.js</code>, <code>manifest.json</code>, and <code>styles.css</code> into the <code>codeblock-crbasic</code> folder you just created.</p>
+
+      <p>When you're done, the folder should look like this:</p>
+
+      <div class="file-list">
+        <div class="file-row">
+          <span class="file-icon">&#128193;</span>
+          <span class="file-name">codeblock-crbasic/</span>
+          <span class="file-desc"></span>
+        </div>
+        <div class="file-row" style="padding-left: 1.5rem;">
+          <span class="file-icon">&#128196;</span>
+          <span class="file-name">main.js</span>
+          <span class="file-desc"></span>
+        </div>
+        <div class="file-row" style="padding-left: 1.5rem;">
+          <span class="file-icon">&#128196;</span>
+          <span class="file-name">manifest.json</span>
+          <span class="file-desc"></span>
+        </div>
+        <div class="file-row" style="padding-left: 1.5rem;">
+          <span class="file-icon">&#128196;</span>
+          <span class="file-name">styles.css</span>
+          <span class="file-desc"></span>
+        </div>
+      </div>
+
+      <p>That's all the files. Nothing else to download or install.</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- ENABLE THE PLUGIN                            -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="step">
+    <span class="step-number">5</span>
+    <h2>Enable the Plugin in Obsidian</h2>
+    <div class="step-body">
+      <ol>
+        <li><strong>Restart Obsidian</strong> (close it completely and re-open it)</li>
+        <li>Open <strong>Settings</strong> (gear icon, bottom-left)</li>
+        <li>Click <strong>Community plugins</strong> in the left sidebar</li>
+        <li>If you see a message about <strong>Restricted Mode</strong>, click <strong>"Turn on community plugins"</strong></li>
+        <li>You should see <strong>"CodeBlock CRBasic"</strong> in the list of installed plugins</li>
+        <li>Toggle the <strong>switch</strong> next to it so it turns <strong>on</strong> (blue/purple)</li>
+      </ol>
+
+      <div class="callout warn">
+        <div class="callout-title">Don't see it?</div>
+        <p>Double-check that all 3 files are in the correct folder, and that the folder is named exactly <code>codeblock-crbasic</code> (no typos, no extra spaces). Then restart Obsidian again.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- HOW TO USE IT                                -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="step">
+    <span class="step-number">6</span>
+    <h2>How to Use It</h2>
+    <div class="step-body">
+      <p>In any Obsidian note, create a <strong>code block</strong> by typing three backticks followed by <code>crbasic</code>, then your code, then three backticks to close:</p>
+
+      <div class="copy-wrap">
+        <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+        <pre><code id="example-src">```crbasic
+'CR1000X Example Program
+Public LoggerTemp, BattV
+Public Dest(9)
+
+DataTable (Test,1,-1)
+  DataInterval (0,15,Sec,10)
+  Minimum (1,BattV,FP2,False,False)
+  Sample (1,LoggerTemp,FP2)
+EndTable
+
+BeginProg
+  Scan (1,Sec,0,0)
+    PanelTemp (LoggerTemp,15000)
+    Battery (BattV)
+    CallTable Test
+  NextScan
+EndProg
+```</code></pre>
+      </div>
+
+      <p>Once you type this into a note, you'll see the code light up with colors:</p>
+
+      <div class="copy-wrap">
+        <pre><code><span class="cmt">'CR1000X Example Program</span>
+<span class="kw">Public</span> LoggerTemp, BattV
+<span class="kw">Public</span> Dest(<span class="num">9</span>)
+
+<span class="fn">DataTable</span> (Test,<span class="num">1</span>,<span class="num">-1</span>)
+  <span class="fn">DataInterval</span> (<span class="num">0</span>,<span class="num">15</span>,Sec,<span class="num">10</span>)
+  <span class="fn">Minimum</span> (<span class="num">1</span>,BattV,FP2,<span class="const">False</span>,<span class="const">False</span>)
+  <span class="fn">Sample</span> (<span class="num">1</span>,LoggerTemp,FP2)
+<span class="kw">EndTable</span>
+
+<span class="kw">BeginProg</span>
+  <span class="kw">Scan</span> (<span class="num">1</span>,Sec,<span class="num">0</span>,<span class="num">0</span>)
+    <span class="fn">PanelTemp</span> (LoggerTemp,<span class="num">15000</span>)
+    <span class="fn">Battery</span> (BattV)
+    <span class="kw">CallTable</span> Test
+  <span class="kw">NextScan</span>
+<span class="kw">EndProg</span></code><span class="label">Preview</span></pre>
+      </div>
+
+      <p><strong>What gets colored:</strong></p>
+      <ul>
+        <li><span style="color:#c678dd;">&#9632;</span> <strong>Keywords</strong> &mdash; <code>BeginProg</code>, <code>EndProg</code>, <code>Scan</code>, <code>NextScan</code>, <code>Public</code>, <code>Dim</code>, <code>If</code>, <code>Else</code>, etc.</li>
+        <li><span style="color:#61afef;">&#9632;</span> <strong>Built-in functions</strong> &mdash; <code>PanelTemp</code>, <code>Battery</code>, <code>DataTable</code>, <code>DataInterval</code>, <code>VoltDiff</code>, <code>Average</code>, etc.</li>
+        <li><span style="color:#d19a66;">&#9632;</span> <strong>Numbers</strong> &mdash; <code>1</code>, <code>15000</code>, <code>3.14</code></li>
+        <li><span style="color:#98c379;">&#9632;</span> <strong>Strings</strong> &mdash; <code>"M!"</code>, <code>"Hello"</code></li>
+        <li><span style="color:#7f848e;">&#9632;</span> <strong>Comments</strong> &mdash; anything after an apostrophe: <code>'this is a comment</code></li>
+        <li><span style="color:#e5c07b;">&#9632;</span> <strong>Constants</strong> &mdash; <code>True</code>, <code>False</code></li>
+      </ul>
+
+      <div class="callout tip">
+        <div class="callout-title">Both views work</div>
+        <p>Syntax highlighting works in both <strong>Edit mode</strong> (where you type) and <strong>Reading mode</strong> (the clean preview). Toggle between them with the book/pencil icon in the top-right corner of a note.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- QUICK TEST                                   -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="step">
+    <span class="step-number">7</span>
+    <h2>Quick Test</h2>
+    <div class="step-body">
+      <p>Want to make sure everything is working? Follow this 30-second test:</p>
+
+      <ol>
+        <li>Open Obsidian</li>
+        <li>Create a new note (click the <strong>"New note"</strong> icon or press <strong>Ctrl+N</strong>)</li>
+        <li>Click the <strong>Copy</strong> button on the example code above</li>
+        <li>Paste it into the note (<strong>Ctrl+V</strong>)</li>
+        <li>You should immediately see colored keywords in the code block</li>
+        <li>Switch to <strong>Reading mode</strong> (click the book icon top-right) &mdash; the colors should appear there too</li>
+      </ol>
+
+      <p>If you see colors &mdash; you're all set!</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- TROUBLESHOOTING                              -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="step">
+    <span class="step-number">?</span>
+    <h2>Troubleshooting</h2>
+    <div class="step-body">
+
+      <p><strong>No colors showing up at all?</strong></p>
+      <ul>
+        <li>Make sure the code block starts with exactly <code>```crbasic</code> (three backticks, then the word crbasic, no space between them)</li>
+        <li>Make sure the plugin is <strong>enabled</strong> in Settings &rarr; Community plugins</li>
+        <li>Try restarting Obsidian completely (close and re-open)</li>
+      </ul>
+
+      <p><strong>Plugin doesn't appear in the plugin list?</strong></p>
+      <ul>
+        <li>The folder must be named exactly <code>codeblock-crbasic</code></li>
+        <li>All 3 files (<code>main.js</code>, <code>manifest.json</code>, <code>styles.css</code>) must be directly inside that folder &mdash; not in a sub-folder</li>
+        <li>Make sure Community Plugins / Restricted Mode is turned off</li>
+      </ul>
+
+      <p><strong>Can't find the <code>.obsidian</code> folder?</strong></p>
+      <ul>
+        <li><strong>Windows:</strong> In File Explorer, click <strong>View</strong> in the top menu, then check <strong>"Hidden items"</strong></li>
+        <li><strong>Mac:</strong> In Finder, press <strong>Cmd + Shift + .</strong> (period) to show hidden files</li>
+        <li><strong>Linux:</strong> Press <strong>Ctrl + H</strong> in your file manager</li>
+      </ul>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  CodeBlock CRBasic v1.0.0 &mdash; Syntax highlighting for Campbell Scientific CRBasic
+</footer>
+
+<script>
+function copyExample(btn) {
+  var text = document.getElementById('example-src').textContent;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(function() {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.textContent = 'Copy';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  } else {
+    // Fallback for older browsers / file:// protocol
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.textContent = 'Copy';
+        btn.classList.remove('copied');
+      }, 2000);
+    } catch(e) {}
+    document.body.removeChild(ta);
+  }
+}
+</script>
+
+</body>
+</html>
