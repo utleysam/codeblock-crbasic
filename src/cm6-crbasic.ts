@@ -51,18 +51,18 @@ class CRBasicHighlighter {
 
     for (let i = 1; i <= doc.lines; i++) {
       const line = doc.line(i);
-      const trimmed = line.text.trim().toLowerCase();
+      const trimmed = line.text.trim();
 
       if (!inCrbasicBlock) {
         // Check for opening fence: ```crbasic (with optional trailing whitespace)
-        if (/^```crbasic\s*$/i.test(line.text.trim())) {
+        if (/^```crbasic\s*$/i.test(trimmed)) {
           inCrbasicBlock = true;
           contentLines.length = 0;
           continue;
         }
       } else {
         // Check for closing fence
-        if (/^```\s*$/.test(line.text.trim())) {
+        if (/^```\s*$/.test(trimmed)) {
           // Tokenize all collected content lines and add decorations
           for (const cl of contentLines) {
             const tokens = tokenizeLine(cl.text, cl.from);
