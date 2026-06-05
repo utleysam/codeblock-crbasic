@@ -1,0 +1,10 @@
+{
+  "id": "codeblock-crbasic",
+  "name": "CodeBlock CRBasic",
+  "version": "1.0.0",
+  "minAppVersion": "1.12.7",
+  "description": "Syntax highlighting for CRBasic (Campbell Scientific) markdown code blocks.",
+  "author": "samutley",
+  "authorUrl": "https://github.com/utleysam",
+  "isDesktopOnly": false
+}
